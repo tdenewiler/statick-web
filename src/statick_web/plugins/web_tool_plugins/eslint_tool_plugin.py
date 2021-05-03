@@ -20,7 +20,7 @@ class ESLintToolPlugin(ToolPlugin):  # type: ignore
     # pylint: disable=too-many-locals
     def scan(self, package: Package, level: str) -> Optional[List[Issue]]:
         """Run tool and gather output."""
-        tool_bin = "npx eslint"
+        tool_bin = ["npx", "eslint"]  # type: List[str]
 
         tool_config = ".eslintrc"
         user_config = self.plugin_context.config.get_tool_config(
@@ -47,7 +47,7 @@ class ESLintToolPlugin(ToolPlugin):  # type: ignore
 
         for src in files:
             try:
-                exe = [tool_bin] + flags + [src]
+                exe = tool_bin + flags + [src]
                 output = subprocess.check_output(
                     exe, stderr=subprocess.STDOUT, universal_newlines=True
                 )
